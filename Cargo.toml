@@ -24,7 +24,6 @@ static_cell = "2"
 
 [build-dependencies]
 const-gen = "1.6"
-json = "0.12"
 xz2 = "0.1.7"
 
 [profile.release]

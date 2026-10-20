@@ -10,11 +10,9 @@ fn main() {
 
     // Vial reads the keyboard definition from the firmware, xz-compressed.
     println!("cargo:rerun-if-changed=vial.json");
-    let vial_json = fs::read_to_string("vial.json").expect("vial.json should be readable");
-    let vial_json =
-        json::stringify(json::parse(&vial_json).expect("vial.json should be valid JSON"));
+    let vial_json = fs::read("vial.json").expect("vial.json should be readable");
     let mut vial_def = Vec::new();
-    XzEncoder::new(vial_json.as_bytes(), 6)
+    XzEncoder::new(vial_json.as_slice(), 6)
         .read_to_end(&mut vial_def)
         .unwrap();
     let vial_id: Vec<u8> = vec![0xC6, 0x5A, 0x71, 0x7F, 0x80, 0x48, 0xAD, 0xD9];
