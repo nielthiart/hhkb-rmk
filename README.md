@@ -20,6 +20,10 @@ For hardware build instructions, follow [Soldering a custom board](https://githu
 
 Download the `.uf2` from [Releases](https://github.com/nielthiart/hhkb-rmk/releases), press Fn+U, then run `cp -X <file>.uf2 /Volumes/NICENANO/`. On other systems, drag it onto the NICENANO drive.
 
+## Go back to ZMK
+
+This firmware overwrites the nice!nano's SoftDevice, so ZMK only boots again when built with the `nrf52840-nosd` snippet ([RMK FAQ](https://rmk.rs/docs/getting_started/faq#zmk-no-longer-works-after-flashing-rmk)). In hhkb-zmk's `build.yaml`, set the `nice_nano_v2` entry to `snippet: studio-rpc-usb-uart;nrf52840-nosd`. Or [re-flash the bootloader](https://nicekeyboards.com/docs/nice-nano/troubleshooting/#i-can-still-get-into-the-existing-bootloader-over-usb) to restore the SoftDevice, after which normal ZMK builds boot again.
+
 ## Build and flash
 
 Only tested on macOS 27.
