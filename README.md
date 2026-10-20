@@ -16,6 +16,10 @@ For hardware build instructions, follow [Soldering a custom board](https://githu
 | Idle scanning | Every ~25 ms | Every ~40 ms | Every ~25 ms, then 250 ms after 10 min |
 | Glitch filter | Drops interrupted reads | None | Two scans must agree |
 
+## Flash a release
+
+Download the `.uf2` from [Releases](https://github.com/nielthiart/hhkb-rmk/releases), press Fn+U, then run `cp -X <file>.uf2 /Volumes/NICENANO/`. On other systems, drag it onto the NICENANO drive.
+
 ## Build and flash
 
 Only tested on macOS 27.
