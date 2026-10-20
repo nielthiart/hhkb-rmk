@@ -49,7 +49,7 @@ To test builds in development, `cargo build --release` builds without flashing.
 
 ## Keys
 
-![Keymap](keymap.svg)
+![Keymap](kle/keymap.svg)
 
 Left (black): base layer. Front of the key (blue): hold Fn. Bottom right (green): hold Fn+Control.
 
