@@ -8,3 +8,5 @@ linker = "flip-link"
 CC_thumbv7em_none_eabihf = { value = "tools/arm-cc.sh", relative = true }
 # llvm-ar from cargo-binutils, so the build needs no arm-none-eabi-binutils.
 AR_thumbv7em_none_eabihf = "rust-ar"
+# Without it, bindgen fails on machines with several clang versions, like CI runners.
+BINDGEN_EXTRA_CLANG_ARGS_thumbv7em_none_eabihf = "-ffreestanding"
