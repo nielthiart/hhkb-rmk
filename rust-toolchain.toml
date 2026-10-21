@@ -1,4 +1,4 @@
 [toolchain]
-channel = "stable"
+channel = "1.99.1"
 components = ["llvm-tools", "rustfmt", "clippy"]
 targets = ["thumbv7em-none-eabihf"]

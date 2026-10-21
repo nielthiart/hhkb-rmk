@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Keep the write token away from dependency build scripts.
+          persist-credentials: false
+      - run: rustup toolchain install
+      - run: cargo install --locked flip-link cargo-binutils cargo-hex-to-uf2
+      - run: cargo fmt --check
+      - run: cargo clippy --release --locked -- -D warnings
+      - name: Build
+        run: |
+          cargo objcopy --release -- -O ihex target/rmk.hex
+          cargo hex-to-uf2 --input-path target/rmk.hex --output-path target/rmk.uf2 --family nrf52840
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp target/rmk.uf2 "hhkb-rmk-$GITHUB_REF_NAME.uf2"
+          gh release create "$GITHUB_REF_NAME" "hhkb-rmk-$GITHUB_REF_NAME.uf2" --generate-notes

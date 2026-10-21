@@ -16,9 +16,13 @@ For hardware build instructions, follow [Soldering a custom board](https://githu
 | Idle scanning | Every ~25 ms | Every ~40 ms | Every ~25 ms, then 250 ms after 10 min |
 | Glitch filter | Drops interrupted reads | None | Two scans must agree |
 
+On USB power, hhkb-rmk keeps the board on and scans every ~4 ms.
+
 ## Flash a release
 
 Download the `.uf2` from [Releases](https://github.com/nielthiart/hhkb-rmk/releases), press Fn+U, then run `cp -X <file>.uf2 /Volumes/NICENANO/`. On other systems, drag it onto the NICENANO drive.
+
+Each new release wipes Vial edits and Bluetooth bonds. Before updating, save the layout in Vial (File, Save current layout), then load it back after flashing and re-pair.
 
 ## Go back to ZMK
 
@@ -35,7 +39,6 @@ Changes to `keymap.rs` only reach the keyboard after such a wipe, because RMK ke
 1. Install [Rust](https://rustup.rs), then the build tools:
 
    ```bash
-   brew install arm-none-eabi-binutils
    cargo install flip-link cargo-binutils cargo-hex-to-uf2
    ```
 

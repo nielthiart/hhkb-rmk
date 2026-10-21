@@ -2,11 +2,13 @@
 //!
 //! Each scan selects the 64 cells through the six BIT lines, drives HYS with the
 //! cell's current state (Topre hysteresis), pulses STROBE and reads KEY. Topre
-//! cannot raise an interrupt, so this always polls, slower the longer it idles.
+//! cannot raise an interrupt, so this always polls, slower the longer it idles
+//! on battery.
 
 use cortex_m::peripheral::{DCB, DWT};
 use embassy_nrf::Peri;
 use embassy_nrf::gpio::{AnyPin, Flex, Level, Output, OutputDrive, Pull};
+use embassy_nrf::pac;
 use embassy_time::{Duration, Instant, Timer};
 use rmk::event::KeyboardEvent;
 use rmk::macros::input_device;
@@ -93,6 +95,10 @@ impl HhkbMatrix {
     }
 
     fn poll_interval(&self) -> Duration {
+        // On USB power the keyboard runs from USB, so idling saves no battery.
+        if pac::POWER.usbregstatus().read().vbusdetect() {
+            return ACTIVE_INTERVAL;
+        }
         let idle_for = self.last_activity.elapsed();
         if idle_for >= SLEEP_AFTER {
             SLEEP_INTERVAL

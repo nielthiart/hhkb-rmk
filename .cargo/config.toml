@@ -6,3 +6,5 @@ linker = "flip-link"
 
 [env]
 CC_thumbv7em_none_eabihf = { value = "tools/arm-cc.sh", relative = true }
+# llvm-ar from cargo-binutils, so the build needs no arm-none-eabi-binutils.
+AR_thumbv7em_none_eabihf = "rust-ar"
